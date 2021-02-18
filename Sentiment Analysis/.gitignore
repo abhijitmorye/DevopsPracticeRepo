@@ -1,15 +1,15 @@
 # SA Frontend ignored files
-node_modules/
-**/sa-frontend/build/
+#node_modules/
+#**/sa-frontend/build/
 
 # SA Logic ignored files
-venv/
+#venv/
 
 # SA WebApp ignored files
-target/
-.mvn/
-!**/maven-wrapper.jar
+#target/
+#.mvn/
+
 
 # IDE ignored files
-.idea/
-*.iml
+#.idea/
+#*.iml
