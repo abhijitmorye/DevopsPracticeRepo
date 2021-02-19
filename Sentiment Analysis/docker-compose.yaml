@@ -1,0 +1,24 @@
+version: "3"
+services: 
+  sa-frontend:
+    image: abhijitmorye007/sa-frontend:0.0.1
+    ports:
+      - 80:80
+    networks:
+      - my-sentimental-network
+  sa-webapp:
+    image: abhijitmorye007/sa-webapp:0.0.3
+    ports:
+      - 8080:8080
+    networks:
+      - my-sentimental-network
+    environment: 
+      - SA_LOGIC_API_URL=http://localhost:5000
+  sa-logic:
+    image: abhijitmorye007/sa-logic:0.0.3
+    ports:
+      - 5000:5000
+    networks:
+      - my-sentimental-network
+networks:
+  my-sentimental-network
