@@ -21,4 +21,4 @@ services:
     networks:
       - my-sentimental-network
 networks:
-  my-sentimental-network
+  my-sentimental-network:
