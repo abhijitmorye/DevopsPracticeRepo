@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: sa-webapp-depl
+  namespace: default
+  labels: 
+    app: sa-webapp-depl
+spec:
+  replicas: 2
+  minReadySeconds: 45
+  selector:   
+    matchLabels: 
+      app: sa-webapp-pods
+  template: 
+    metadata: 
+      name: sa-webapp-pods
+      namespace: default
+      labels: 
+        app: sa-webapp-pods
+    spec:
+      containers: 
+        - image: abhijitmorye007/sa-webapp:0.0.3
+          name: sa-webapp-container
+          ports:
+            - containerPort: 8080
+          imagePullPolicy: Always
+          env:
+            - name: SA_LOGIC_API_URL
+              valueFrom:
+                configMapKeyRef: 
+                  name: sa-logic-url
+                  key: sa-logic-url
+          imagePullPolicy: Always
+
+
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sa-webapp-service
+  namespace: default
+  labels:
+    app: sa-webapp-service
+spec: 
+  selector:
+    app: sa-webapp-pods
+  ports:
+     - port: 8080
+       nodePort: 30002
+       targetPort: 8080
+       protocol: TCP
+  type: LoadBalancer
+  sessionAffinity: None

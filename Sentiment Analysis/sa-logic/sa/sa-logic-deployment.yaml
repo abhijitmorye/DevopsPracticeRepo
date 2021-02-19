@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sa-logic-depl
+  namespace: default
+  labels:
+    app: sa-logic-depl
+spec: 
+  replicas: 2
+  minReadySeconds: 45
+  selector: 
+    matchLabels:
+      app: sa-logic-pods
+  template: 
+    metadata: 
+      name: sa-logic-pods
+      namespace: default
+      labels:
+        app: sa-logic-pods
+    spec:
+      containers:
+        - image: abhijitmorye007/sa-logic:0.0.3
+          ports:
+            - containerPort: 5000
+          name: sa-logic-container
+          imagePullPolicy: Always
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sa-logic-service
+  namespace: default
+  labels:
+    app: sa-logic-service
+spec:
+  selector: 
+    app: sa-logic-pods
+  ports:
+    - nodePort: 30001
+      port: 80
+      targetPort: 80
+      protocol: TCP
+  type: LoadBalancer
+  sessionAffinity: None
+
+    

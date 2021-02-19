@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sa-frontend-depl
+  namespace: default
+  labels:
+    app: sa-frontend-depl
+spec:
+  replicas: 2
+  minReadySeconds: 45
+  selector:
+    matchLabels:
+      app: sa-frontend-depl-pods
+  template:
+    metadata:
+      name: sa-frontend-pods
+      namespace: default
+      labels:
+        app: sa-frontend-depl-pods
+    spec:
+      containers:
+        - image: abhijitmorye007/sa-frontend:0.0.1
+          name: sa-frontend-depl-container
+          ports:
+            - containerPort: 80
+          imagePullPolicy: Always
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sa-frontend-service
+  namespace: default
+spec:
+  selector:
+    app: sa-frontend-depl-pods
+  ports:
+    - nodePort: 30000
+      port: 80
+      targetPort: 80
+      protocol: TCP
+  type: LoadBalancer
+  sessionAffinity: None
