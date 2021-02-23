@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata: 
   name: sa-logic-url
 data:
-  sa-logic-url: http://localhost:5000
+  sa-logic-url: sa-logic-service
